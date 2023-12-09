@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { DB_NAME } from "../constants.js";
 
+//Second approach to connect to MongoDB databse with creating funcion and exporting
 // connectDB = function(){}
+
 const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(

@@ -1,7 +1,20 @@
 import dotenv from "dotenv";
 import connectDB from "./db/db_connection.js";
 dotenv.config({ path: "./env" });
-connectDB();
+
+connectDB()
+  .then(() => {
+    app.on((error) => {
+      console.log("Server Error", error);
+    });
+
+    app.listen(process.env.PORT || 4000, () => {
+      console.log(`Server is running at port : ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("Error connecting to the database", error);
+  });
 
 // First approach to connect to database with IIFE function
 
