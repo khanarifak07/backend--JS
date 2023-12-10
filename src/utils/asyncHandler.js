@@ -31,6 +31,21 @@ export { asyncHandler };
   }
 }; */
 
-/* const test = (requestHandler) => (req, res, next) => {
-  Promise.resolve(requestHandler(req, res, next)).catch((error) => next(error));
-}; */
+//Promise
+/* const myPromise = new Promise((resolve, reject) => {});
+
+myPromise
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+async function promiseFn() {
+  try {
+    await myPromise;
+  } catch (error) {
+    console.log(error);
+  }
+} */
