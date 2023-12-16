@@ -2,9 +2,11 @@ import dotenv from "dotenv";
 import connectDB from "./db/db_connection.js";
 dotenv.config({ path: "./env" });
 
+import { app } from "./app.js";
+
 connectDB()
   .then(() => {
-    app.on((error) => {
+    app.on("error", (error) => {
       console.log("Server Error", error);
     });
 
@@ -34,4 +36,5 @@ connectDB()
   }
 })(); */
 
-// (() => {})()(function () {})();
+// (() => {})() arrow syntax
+//(function () {})(); normal syntax
