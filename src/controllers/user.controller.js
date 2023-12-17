@@ -17,18 +17,17 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //1. taking user details
   const { username, email, fullName, password } = req.body;
-  console.log(username, email);
 
   //2. Validation checking all fileds are required
   if (
-    [username, email, fullName, password].some((field) => field?.trim === "")
+    [username, email, fullName, password].some((field) => field?.trim() === "")
   ) {
     // return res.status(400).json({ message: "One of the fields is empty" });
     throw new ApiError(400, "All fields are required");
   }
 
   //3.Checking users is existed or not by username and email
-  const existedUser = User.findOne({
+  const existedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
   if (existedUser) {
@@ -38,7 +37,17 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //4.Cheking images is there or not
   const avatarLocalPath = req.files?.avatar[0]?.path; // req.files (by multer)
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+  //checking for coverImage as this is optional so we getting error while req api from postman :-ReferenceError: coverImageLocalPath is not defined
+  let coverImageLocalPath;
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverImageLocalPath = req.files.coverImage[0].path;
+  }
 
   if (!avatarLocalPath) {
     // return res.status(400).json({ message: "Avatar is requied" });
